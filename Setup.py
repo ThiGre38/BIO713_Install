@@ -23,6 +23,21 @@ import sys
 REQUIRED_MODULES = ["Bio", "reportlab"]  # Example list
 
 
+def title_sup():
+    """
+    Displays the header with some information about the script.
+    """
+    line = 40 * "#"
+    print(line)
+    print("#" + 10 * " " + "BIO 713 Setup")
+    print("#" + 10 * " " + "UGA")
+    print("#" + 10 * " " + "TG©2026")
+    print(line)
+    print("# Checks the presence of required module:")
+    print("# - Biopython\n# - ReportLab")
+    print(line)
+
+
 def check_module(module_name):
     """
     Checks if a specific module is installed and returns its version.
@@ -53,7 +68,8 @@ def get_install_command(module_name):
 
 
 def main():
-    print(f"\n🔍 Checking required modules...\n")
+    title_sup()
+    print(f"#\n# 🔍 Checking required modules...\n#")
 
     all_installed = True
 
@@ -61,25 +77,29 @@ def main():
         is_ok, info = check_module(module)
 
         if is_ok:
-            print(f"✅ [FOUND] {module:15} version {info}")
+            print(f"# ✅ [FOUND] {module:15} version {info}")
         else:
-            print(f"❌ [MISSING] {module:15}")
+            print(f"# ❌ [MISSING] {module:15}")
             all_installed = False
             # Optional: Print the install command immediately
             if module == "BIO":
-                print(f"       🔧 Install command: pixi add biopython\n")
+                print(f"#       🔧 Install command: pixi add biopython\n")
             else:
-                print(f"       🔧 Install command: {get_install_command(module)}\n")
+                print(f"#       🔧 Install command: {get_install_command(module)}\n#")
 
-    print("-" * 40)
+    print("#" * 40)
 
     if all_installed:
-        print("✅ All required modules are installed and ready!")
+        print("# ✅ All required modules are installed and ready!")
+        print("#\n# End of Script")
+        print("#" * 40)
         sys.exit(0)  # Success code (usually 0)
     else:
         print(
-            "❌ Some dependencies are missing. Please install them before running your project."
+            "# ❌ Some dependencies are missing.\n#\n# Please install them before running your project."
         )
+        print("#\n# End of Script")
+        print("#" * 40)
         sys.exit(1)  # Error code (usually non-zero, e.g., 1)
 
 

@@ -14,9 +14,6 @@ Please use carefully.
 python setup.py
 ```
 
-![help](imgs/help.png)
-
-
 ## Prerequisites
 
 The script should work on any computer running a modern OS (MacOS from Sequoia+, Linux or Windows 10+)
@@ -25,6 +22,14 @@ Unix users (MacOS and Linux) will need the terminal.app located in `Applications
 Use the PowerShell application on Windows machines.
 
 ## Fonctionnement du script
+
+- When one or more missing modules are detected:
+
+![help](imgs/missing.png)
+
+- When all modules have been detected:
+
+![help](imgs/found.png)
 
 ## Copyright
 

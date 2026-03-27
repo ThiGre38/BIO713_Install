@@ -69,7 +69,7 @@ def get_install_command(module_name):
 
 def main():
     title_sup()
-    print(f"#\n# 🔍 Checking required modules...\n#")
+    print("#\n# 🔍 Checking required modules...\n#")
 
     all_installed = True
 
@@ -77,16 +77,20 @@ def main():
         is_ok, info = check_module(module)
 
         if is_ok:
-            print(f"# ✅ [FOUND] {module:15} version {info}")
-        else:
-            print(f"# ❌ [MISSING] {module:15}")
-            all_installed = False
-            # Optional: Print the install command immediately
             if module == "BIO":
-                print(f"#       🔧 Install command: pixi add biopython\n")
+                print(f"# ✅ [FOUND] biopython version {info}")
             else:
-                print(f"#       🔧 Install command: {get_install_command(module)}\n#")
+                print(f"# ✅ [FOUND] {module:15} version {info}")
+        else:
+            if module == "BIO":
+                print("# ❌ [MISSING] biopython")
+                print("#       🔧 Install command: pixi add biopython\n")
 
+            # Optional: Print the install command immediately
+            else:
+                print(f"# ❌ [MISSING] {module:15}")
+                print(f"#       🔧 Install command: {get_install_command(module)}\n#")
+            all_installed = False
     print("#" * 40)
 
     if all_installed:

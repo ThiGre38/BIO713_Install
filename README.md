@@ -8,12 +8,10 @@ The cours is proposed as part of the Master [Molecular and Cellular Biology](htt
 This script is still in development and can behave abnormally. It is provided "as is", without warranty as indicated in the [licence](LICENSE.md).
 Please use carefully.
 
-See help for additional options.
-
 ## Usage
 
 ```
-python Setup.py --help
+python setup.py
 ```
 
 ![help](imgs/help.png)

@@ -19,7 +19,7 @@ Please use carefully.
 - Checking the presence of the required modules
 
 ```
-python setup.py
+python Setup.py
 ```
 
 ## Prerequisites

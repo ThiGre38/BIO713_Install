@@ -44,7 +44,7 @@ echo -e " ${BLUE}###################################################${NC}"
 # TODO : Windows
 title_sup
 
-echo -e " ${MAGENTA} 1.>>>>>>>>>>>${NC} Detecting environment."
+echo -e "\n ${MAGENTA} 1.>>>>>>>>>>>${NC} Detecting environment."
 # Initialise variables
 unameResult=`uname -s`
 isMacOS=false
@@ -65,7 +65,7 @@ else echo -e "\n             ${RED}> ERROR: Insupported environment."
      echo -e "  ${RED}          ************ BYE ****************${NC}\n"; exit 1
 fi
 
-echo -e " ${MAGENTA} 2.>>>>>>>>>>>${NC} Installing the modules."
+echo -e "\n ${MAGENTA} 2.>>>>>>>>>>>${NC} Installing the modules."
 echo -e "\n${CYAN} 1. -> Creates the hierarchy...${NC}"
 mkdir -p ~/Documents/BIO713/TP/files/pombe
 
@@ -87,7 +87,7 @@ echo -e "\n${CYAN} 5. -> All steps done...${NC}"
 echo -e "\n READY !\n"
 
 cd ~/Documents/BIO713/TP
-echo -e " ${MAGENTA} 3.>>>>>>>>>>>${NC} Running the app."
+echo -e "\n ${MAGENTA} 3.>>>>>>>>>>>${NC} Running the app."
 echo " Please copy-paste the following commands:"
 echo -e "\n${CYAN} 6. -> Please move to the following directory:${NC}"
 echo -e "cd ${PWD}\n"

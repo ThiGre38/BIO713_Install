@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+#: Title       : Checking.sh
+#: Date        : 2026-04-15
+#: Updated     : 
+#: Author      : Thierry Gautier <thierry.gautier@univ-grenoble-alpes.fr>
+#: Version     : 1.0b
+#: Description : Checks the pix environment for the BIO713 Practical.
+#: Usage       : ./Checking.sh [options]
+#: Options     : --version
 set -euo pipefail
 
 echo "== Checker: Pixi shell, JupyterLab, ReportLab =="

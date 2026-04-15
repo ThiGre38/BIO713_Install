@@ -19,7 +19,9 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
-TARGET_DIR="py"
+HIERARCHY_DIR="${HOME}/Documents/BIO713/TP/files"
+mkdir -p "$HIERARCHY_DIR"
+TARGET_DIR="${HOME}/Documents/BIO713/TP"
 
 # ---- some functions ----
 function title_sup(){

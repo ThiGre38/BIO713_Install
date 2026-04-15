@@ -25,7 +25,7 @@ TARGET_DIR="${HOME}/Documents/BIO713/TP"
 
 # ---- some functions ----
 function title_sup(){
-echo -e " ${BLUE}###################################################${NC}"
+echo -e "\n ${BLUE}###################################################${NC}"
 echo -e " ${BLUE}#              ${YELLOW}AUTOMATIC CONFIGURATION            ${BLUE}#${NC}"
 echo -e " ${BLUE}#              ${YELLOW}    MacOS and Linux                ${BLUE}#${NC}"
 echo -e " ${BLUE}#                     ${YELLOW} (BIO713)                   ${BLUE}#${NC}"
@@ -39,14 +39,18 @@ echo
 
 function usage() {
   cat <<'EOF'
+
 Usage:
   ./Install.sh           Install (default)
   ./Install.sh --check   Check for proper installation
   ./Install.sh --remove  Totally remove the install and revert changes
+  ./Install.sh --help    Display this message and quit.
 
 What “remove” does:
   - Deletes the target directory: ~/Documents/BIO713/Practical
   - If pixi was installed by this script, it will try to remove ~/.pixi (and restore nothing else)
+  
+UGA - Grenoble, TG©2026
 EOF
 }
 
@@ -78,7 +82,7 @@ else
 fi
 
 # ---- Install pixi (Rust-based, installs to user home) ----
-install_pixi() {
+function install_pixi() {
     echo
     echo -e "${CYAN}==>${NC} Installing JupyterLab & ReportLab  ${CYAN}<==${NC}"
     echo "Using pixi environment to keep Python deps tidy."
@@ -113,22 +117,30 @@ function cleanup() {
     else
         echo -e "${YELLOW}==>${NC} Project directory not found (skipping): $TARGET_DIR ${YELLOW}<==${NC}"
     fi
+    
+    BIO713="${HOME}/Documents/BIO713"
+    if [ -d "${BIO713}" ];then
+        echo -e "${YELLOW}==>${NC} Deleting BIO713 directory: $BIO713 ${YELLOW}<==${NC}"
+        rm -rf "$BIO713"
+    else
+        echo -e "${YELLOW}==>${NC} BIO713 directory not found (skipping): $BIO713 ${YELLOW}<==${NC}"
+    fi
+    
+    # Best-effort: only remove ~/.pixi if we believe we installed it
+    if [ -f "$HOME/.pixi_remove_marker" ]; then
+        echo -e "${GREEN}==>${NC} pixi was installed by this script (marker found)."
+        echo "Attempting to remove: $HOME/.pixi"
+        rm -rf "$HOME/.pixi" || true
+        rm -f "$HOME/.pixi_remove_marker" || true
+        echo -e "${GREEN}==>${NC} pixi removal attempted. ${YELLOW}<==${NC}"
+    else
+        echo -e "${RED}==>${NC} pixi removal skipped. ${RED}<==${NC}"
+        echo "Reason: marker not found, so we can't safely assume pixi was installed by this script."
+        echo "If you added PATH changes manually, you should remove them from your shell profile."
+    fi
 
-  # Best-effort: only remove ~/.pixi if we believe we installed it
-  if [ -f "$HOME/.pixi_remove_marker" ]; then
-    echo -e "${GREEN}==>${NC} pixi was installed by this script (marker found)."
-    echo "Attempting to remove: $HOME/.pixi"
-    rm -rf "$HOME/.pixi" || true
-    rm -f "$HOME/.pixi_remove_marker" || true
-    echo -e "${GREEN}==>${NC} pixi removal attempted. ${YELLOW}<==${NC}"
-  else
-    echo -e "${RED}==>${NC} pixi removal skipped. ${RED}<==${NC}"
-    echo "Reason: marker not found, so we can't safely assume pixi was installed by this script."
-    echo "If you added PATH changes manually, you should remove them from your shell profile."
-  fi
-
-  echo
-  echo -e "${GREEN}==>${NC} Remove complete ${GREEN}<==${NC}"
+    echo
+    echo -e "${GREEN}==>${NC} Remove complete ${GREEN}<==${NC}"
 }
 
 # ---- Use pixi to create an env + install Python packages ----

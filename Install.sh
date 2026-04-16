@@ -49,7 +49,7 @@ Usage:
 What “remove” does:
   - Deletes the target directory: ~/Documents/BIO713/Practical
   - If pixi was installed by this script, it will try to remove ~/.pixi (and restore nothing else)
-  
+
 UGA - Grenoble, TG©2026
 EOF
 }
@@ -86,7 +86,7 @@ function install_pixi() {
     echo
     echo -e "${CYAN}==>${NC} Installing JupyterLab & ReportLab  ${CYAN}<==${NC}"
     echo "Using pixi environment to keep Python deps tidy."
-    
+
     if command -v pixi >/dev/null 2>&1; then
         echo -e "    ${GREEN}==>${NC} pixi: already installed."
         return 0
@@ -117,7 +117,7 @@ function cleanup() {
     else
         echo -e "${YELLOW}==>${NC} Project directory not found (skipping): $TARGET_DIR ${YELLOW}<==${NC}"
     fi
-    
+
     BIO713="${HOME}/Documents/BIO713"
     if [ -d "${BIO713}" ];then
         echo -e "${YELLOW}==>${NC} Deleting BIO713 directory: $BIO713 ${YELLOW}<==${NC}"
@@ -125,7 +125,7 @@ function cleanup() {
     else
         echo -e "${YELLOW}==>${NC} BIO713 directory not found (skipping): $BIO713 ${YELLOW}<==${NC}"
     fi
-    
+
     # Best-effort: only remove ~/.pixi if we believe we installed it
     if [ -f "$HOME/.pixi_remove_marker" ]; then
         echo -e "${GREEN}==>${NC} pixi was installed by this script (marker found)."
@@ -166,6 +166,7 @@ install_python_pkgs() {
   echo -e "    ${GREEN}==>${NC} Installing via pixi (this may download wheels/packages)..."
   pixi add python || true
   pixi add jupyterlab || true
+  pixi add biopython || true
   pixi add reportlab || true
   pixi install --no-progress || pixi install || true
 
@@ -207,7 +208,7 @@ function check_env() {
 }
 
 function check_deps() {
-    
+
     if ! command -v `pixi run python --version` >/dev/null 2>&1;then
         echo  -e " ${RED}𐄂${NC} pixi is not yet installed."
         BADPYT=false
@@ -216,26 +217,32 @@ function check_deps() {
         echo -e " ${GREEN}✔${NC} ${version}"
         BADPYT=true
     fi
-    
-    if ! command -v `pixi run jupyter lab --version` >/dev/null 2>&1;then
+    version=`pixi run jupyter lab --version` || true
+    if [[ "$version" == " " ]]; then
         echo  -e " ${RED}𐄂${NC} jupyter lab is not yet installed."
         BADJUP=false
-        pwd
     else
-        version=`pixi run jupyter lab --version`
         echo -e " ${GREEN}✔${NC} Jupyter lab ${version}"
         BADJUP=true
     fi
-    if ! command -v `pixi run python -c 'import reportlab; print(reportlab.Version)'` >/dev/null 2>&1;then
+    version=`pixi run python -c 'import Bio; print(Bio.__version__)'` || true
+    if [[ "$version" == " " ]]; then
+        echo -e " ${RED}𐄂${NC} BioPython is not yet installed."
+        BADBPY=false
+    else
+        echo -e " ${GREEN}✔${NC} BioPython ${version}"
+        BADBPY=true
+    fi
+    version=`pixi run python -c 'import reportlab; print(reportlab.Version)'` || true
+    if [[ "$version" == " " ]]; then
         echo  -e " ${RED}𐄂${NC} ReportLab is not yet installed."
         BADREP=false
     else
-        version=`pixi run python -c 'import reportlab; print(reportlab.Version)'`
         echo -e " ${GREEN}✔${NC} ReportLab ${version}"
         BADREP=true
     fi
     echo
-    if [[ "$BADPYT" == "true" && "$BADJUP" == "true" && "$BADREP" == "true" ]];then
+    if [[ "$BADPYT" == "true" && "$BADJUP" == "true" && "$BADREP" == "true" && "$BADBPY" == "true" ]];then
         echo -e "${CYAN}==>${NC} Installation complete! ${CYAN}<==${NC}"
         echo; exit 0
     else
@@ -247,31 +254,31 @@ function check_deps() {
 
 # ---- Main function ----
 function main() {
-  
+
     if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
         usage
         exit 0
     fi
-  
+
     MODE="install"
     if [[ "${1:-}" == "--remove" ]]; then
         MODE="remove"
     fi
-  
+
     CHECK=0
     if [[ "${1:-}" == "--check" ]];then
         CHECK=1
     fi
-  
+
     title_sup
     detect_os
 
     if [[ "$CHECK" == 1 ]];then
-        check_pixi
         check_env
+        check_pixi
         check_deps
     fi
-  
+
     if [[ "$MODE" == "remove" ]]; then
         cleanup
         echo

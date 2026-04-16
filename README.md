@@ -1,4 +1,4 @@
-# Bio713 Setup
+# BIO713 Setup
 
 ## Goal
 These scripts install and check the required environment for the course [BIO713](https://formations.univ-grenoble-alpes.fr/fr/catalogue-2021/master-XB/master-biologie-IAQKB0GE/parcours-molecular-and-cellular-biology-1re-annee-IK43J2QV/ue-from-cells-to-viruses-molecular-genetics-and-epigenetics-controls-JGROOI24.html) "From Cells to Viruses: Molecular Genetics and Epigenetics Controls".
@@ -11,15 +11,16 @@ Please use carefully.
 
 ## Usage
 
-- Installation of the environment:
+- Installation of the environment: To install the required modules, open your terminal (inside `Applications/Utilities` on MacOS) and type the following command. The script will create the folder hierarchy, install [pixi](https://pixi.prefix.dev/latest/advanced/pixi_shell/), [python](https://www.python.org/), [biopython](https://biopython.org/), [reportlab](https://docs.reportlab.com/) and [Jupyter Lab](https://jupyter.org/).
 
 ```
 ./Install.sh
 ```
+- Your machine is set up !
 
 ![pixi](imgs/install.png)
 
-- Checking the validity of the installation:
+- The activation and use of the environment will be explain during the class. In the meantime, you can check the validity of your installation by typing:
 
 ```
 ./Install.sh --check
@@ -47,19 +48,27 @@ Alernatively, you can copy-paste the code into a Jupyter cell and run the cell.
 The scripts should work on any computer running a modern OS (MacOS from Sequoia+, or Linux)
 Unix users (MacOS and Linux) will need the terminal.app located in `Applications/Utilities` on MacOS systems (Adapt names if your OS is not running in US English language).
 
-Use the `PowerShell` application on Windows machines.
+Another script for the `PowerShell` application on Windows machines is provided "as is". It had not been extensively tested so use with caution:
+
+- Open PowerShell on your Windows machine and run the script or double-clik the script `Windows_Install.ps1`
+- In case of installation failure, proceed with the manual install.
 
 The activation and the manipulation of the environment will be discussed during the class.
 
 ## Desinstallation
 
-At the end of the course, you can remove the whole install by running again the bash script
+- At the end of the course, you can remove the whole install by running again the bash script on MacOS and Linux:
 
 ```
 ./Install.sh --remove
 ```
 
 ![pixi](imgs/remove.png)
+- Windows users can revert by typing in the PowerShell:
+
+```
+.\Win_install.ps1 -Remove
+```
 
 The script will attempt to remove as much as possible:
 

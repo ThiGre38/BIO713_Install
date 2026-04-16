@@ -19,7 +19,7 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
-HIERARCHY_DIR="${HOME}/Documents/BIO713/TP/files"
+HIERARCHY_DIR="${HOME}/Documents/BIO713/TP/files/pombe"
 mkdir -p "$HIERARCHY_DIR"
 TARGET_DIR="${HOME}/Documents/BIO713/TP"
 
@@ -113,7 +113,7 @@ function cleanup() {
 
     if [ -d "$TARGET_DIR" ]; then
         echo -e "${YELLOW}==>${NC} Deleting project directory: $TARGET_DIR ${YELLOW}<==${NC}"
-        rm -rf "$TARGET_DIR"
+        rm -Rf "$TARGET_DIR"
     else
         echo -e "${YELLOW}==>${NC} Project directory not found (skipping): $TARGET_DIR ${YELLOW}<==${NC}"
     fi
@@ -121,7 +121,7 @@ function cleanup() {
     BIO713="${HOME}/Documents/BIO713"
     if [ -d "${BIO713}" ];then
         echo -e "${YELLOW}==>${NC} Deleting BIO713 directory: $BIO713 ${YELLOW}<==${NC}"
-        rm -rf "$BIO713"
+        rm -Rf "$BIO713"
     else
         echo -e "${YELLOW}==>${NC} BIO713 directory not found (skipping): $BIO713 ${YELLOW}<==${NC}"
     fi
@@ -155,7 +155,7 @@ install_python_pkgs() {
   echo "Creating/using pixi environment: $TARGET_DIR"
   # Minimal pixi config: Python + packages via PyPI
   # We keep it compact: use pixi 'init' and then 'add' for python deps.
-  if [ ! -f "pixi.toml" ]; then
+  if [ ! -f "$TARGET_DIR/pixi.toml" ]; then
     # Create in current dir to keep things simple
     pixi init "$TARGET_DIR" || true
   fi
@@ -267,23 +267,24 @@ function main() {
 
     CHECK=0
     if [[ "${1:-}" == "--check" ]];then
-        CHECK=1
+        CHECK=true
     fi
 
     title_sup
     detect_os
 
-    if [[ "$CHECK" == 1 ]];then
+    if [[ "$CHECK" == "true" ]];then
         check_env
         check_pixi
         check_deps
+        exit 0
     fi
 
     if [[ "$MODE" == "remove" ]]; then
         cleanup
         echo
         echo -e "${YELLOW}==> Note${NC}:"
-        echo "- Check that pixi has been removed from your path,"
+        echo "- Check that pixi has been removed from your path, if you wanted it removed."
         echo "  Delete or comment out in your ~/.bashrc or ~/.zshrc:"
         echo "    export PATH=\"\$HOME/.pixi/bin:\$PATH\""
         echo

@@ -208,11 +208,11 @@ function check_env() {
 }
 
 function check_deps() {
-    if ! command -v `pixi run python --version` >/dev/null 2>&1;then
-        echo  -e " ${RED}𐄂${NC} pixi is not yet installed."
+    version=`pixi run python --version`
+    if [[ "$version" == " " ]];then
+        echo  -e " ${RED}𐄂${NC} Python is not yet installed."
         BADPYT=false
     else
-        version=`pixi run python --version`
         echo -e " ${GREEN}✔${NC} ${version}"
         BADPYT=true
     fi

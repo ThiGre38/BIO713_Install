@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 #: Title       : Install.sh
 #: Date        : 2026-04-08
-#: Updated     : 2026-04-15
+#: Updated     : 2026-04-16
 #: Author      : Thierry Gautier <thierry.gautier@univ-grenoble-alpes.fr>
-#: Version     : 2.0b
+#: Version     : 2.0
 #: Description : Automatic install of python for the BIO713 Practical.
 #: Usage       : ./Install.sh [options]
-#: Options     : --help --remove
+#: Options     : --help, --remove, --check
 set -euo pipefail
 
 # ---- parameters ----
@@ -20,7 +20,6 @@ CYAN='\033[0;36m'
 MAGENTA='\033[0;35m'
 NC='\033[0m' # No Color
 HIERARCHY_DIR="${HOME}/Documents/BIO713/TP/files/pombe"
-mkdir -p "$HIERARCHY_DIR"
 TARGET_DIR="${HOME}/Documents/BIO713/TP"
 
 # ---- some functions ----
@@ -144,13 +143,13 @@ function cleanup() {
 }
 
 # ---- Use pixi to create an env + install Python packages ----
-install_python_pkgs() {
-  #local TARGET_DIR="py"
-  # Ensure pixi can create/run envs
-  if ! command -v pixi >/dev/null 2>&1; then
-    echo "${RED}==> Error${NC}: pixi is required but not available."
-    exit 1
-  fi
+function install_python_pkgs() {
+    mkdir -p "$HIERARCHY_DIR"
+    # Ensure pixi can create/run envs
+    if ! command -v pixi >/dev/null 2>&1; then
+        echo "${RED}==> Error${NC}: pixi is required but not available."
+        exit 1
+    fi
 
   echo "Creating/using pixi environment: $TARGET_DIR"
   # Minimal pixi config: Python + packages via PyPI
@@ -179,36 +178,36 @@ install_python_pkgs() {
 
 function check_pixi() {
     echo
-    echo -e "${CYAN}==>${NC} Checker: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
-    echo "This works on macOS and popular Linux distros."
-    echo
     echo -e "${CYAN}==>${NC} Checking the installation of pixi and deps ${CYAN}<==${NC}"
     if command -v pixi >/dev/null 2>&1; then
         version=`pixi --version`
         echo -e " ${GREEN}✔${NC} ${version}"
-        else
-            echo  -e " ${RED}𐄂${NC} pixi is not yet installed."
-            echo "First run the install.sh script..."
-            echo "...or restart your terminal if you already ran the install.sh script."
-            exit 1
+    else
+        echo  -e " ${RED}𐄂${NC} pixi is not yet installed."
+        echo "First run ./Install.sh ..."
+        echo "...or restart your terminal if you already ran the ./Install.sh."
+        exit 1
     fi
 }
 
 function check_env() {
+    echo
+    echo -e "${CYAN}==>${NC} Checker: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
+    echo "This works on macOS and popular Linux distros."
+    echo
     # Test of the directory
     if [ ! -d "$TARGET_DIR" ];then
-        echo -e "\n${RED}ERROR${NC}: The pixi environment for the practical is not detected."
-        echo -e "Please run first the ./Install.sh, then re-run ./Install.sh --check.\n"
+        echo -e "\n${RED}Error${NC}: The pixi environment for the practical is not detected."
+        echo -e "Please run first ./Install.sh, then re-run ./Install.sh --check.\n"
         exit 1
-        else
-            cd $TARGET_DIR
-            echo -e "${GREEN}==> Working in: $TARGET_DIR <==${NC}"
-            echo
+    else
+        cd $TARGET_DIR
+        echo -e "${GREEN}==> Working in: $TARGET_DIR <==${NC}"
+        echo
     fi
 }
 
 function check_deps() {
-
     if ! command -v `pixi run python --version` >/dev/null 2>&1;then
         echo  -e " ${RED}𐄂${NC} pixi is not yet installed."
         BADPYT=false
@@ -294,12 +293,12 @@ function main() {
         echo
         echo -e "${CYAN}==>${NC} Installation complete! ${CYAN}<==${NC}"
         echo
-        echo -e "${GREEN}==>${NC} Restart your terminal and run the Checking.sh script."
-        echo " Type either ./Checking.sh or bash Checking.sh"
+        echo -e "${GREEN}==>${NC} Restart your terminal to use python and jupyter lab."
+        echo " You can also check you installation by typing ./Install --check"
         echo
         echo -e "${YELLOW}==> Note${NC}:"
-        echo "- If your shell doesn't automatically pick up pixi on the next login,"
-        echo "  add this to your ~/.bashrc or ~/.zshrc:"
+        echo " If your shell doesn't automatically pick up pixi on the next login,"
+        echo " add this to your ~/.bashrc or ~/.zshrc:"
         echo "    export PATH=\"\$HOME/.pixi/bin:\$PATH\""
         echo
     fi

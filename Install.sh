@@ -102,6 +102,9 @@ function install_pixi() {
         echo "    ${YELLOW}Warning${NC}: pixi install completed, but pixi not found in PATH."
         echo "Try: export PATH=\"\$HOME/.pixi/bin:\$PATH\" and re-run."
         exit 1
+    else
+        cd ${TARGET_DIR}
+        pixi clean
     fi
 }
 

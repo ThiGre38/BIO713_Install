@@ -58,9 +58,9 @@ function detect_os() {
     OS="$(uname -s)"
     IS_MAC=0
     IS_LINUX=0
-    OSV=`uname -o`
-    OSR=`uname -r`
-    proc=` uname -m`
+    OSV="$(uname -o)"
+    OSR="$(uname -r)"
+    proc="$(uname -m)"
     case "$OS" in
         Darwin*) IS_MAC=1;
             echo -e "             ${GREEN}>${NC} Script launched on MacOS";;
@@ -102,9 +102,6 @@ function install_pixi() {
         echo "    ${YELLOW}Warning${NC}: pixi install completed, but pixi not found in PATH."
         echo "Try: export PATH=\"\$HOME/.pixi/bin:\$PATH\" and re-run."
         exit 1
-    else
-        cd ${TARGET_DIR}
-        pixi clean
     fi
 }
 
@@ -148,6 +145,8 @@ function cleanup() {
 # ---- Use pixi to create an env + install Python packages ----
 function install_python_pkgs() {
     mkdir -p "$HIERARCHY_DIR"
+    cd ${TARGET_DIR}
+
     # Ensure pixi can create/run envs
     if ! command -v pixi >/dev/null 2>&1; then
         echo "${RED}==> Error${NC}: pixi is required but not available."
@@ -160,6 +159,8 @@ function install_python_pkgs() {
   if [ ! -f "$TARGET_DIR/pixi.toml" ]; then
     # Create in current dir to keep things simple
     pixi init "$TARGET_DIR" || true
+  else
+    pixi clean
   fi
 
   # Add dependencies (idempotent enough for common use)

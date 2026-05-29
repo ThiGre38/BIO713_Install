@@ -202,7 +202,9 @@ function check_env() {
     # Test of the directory
     if [ ! -d "$TARGET_DIR" ];then
         echo -e "\n${RED}Error${NC}: The pixi environment for the practical is not detected."
-        echo -e "Please run first ./Install, then re-run ./Install --check.\n"
+        echo -e "If you know it is present on your computer, please place here:"
+        echo -e "${YELLOW} ==> $TARGET_DIR <==${NC}"
+        echo -e "Else, please run first ./Install, then re-run ./Install --check.\n"
         exit 1
     else
         cd $TARGET_DIR

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-#: Title       : Install.sh
+#: Title       : Install
 #: Date        : 2026-04-08
 #: Updated     : 2026-04-16
 #: Author      : Thierry Gautier <thierry.gautier@univ-grenoble-alpes.fr>
 #: Version     : 2.0
 #: Description : Automatic install of python for the BIO713 Practical.
-#: Usage       : ./Install.sh [options]
+#: Usage       : ./Install [options]
 #: Options     : --help, --remove, --check
 set -euo pipefail
 
@@ -40,10 +40,10 @@ function usage() {
   cat <<'EOF'
 
 Usage:
-  ./Install.sh           Install (default)
-  ./Install.sh --check   Check for proper installation
-  ./Install.sh --remove  Totally remove the install and revert changes
-  ./Install.sh --help    Display this message and quit.
+  ./Install           Install (default)
+  ./Install --check   Check for proper installation
+  ./Install --remove  Totally remove the install and revert changes
+  ./Install --help    Display this message and quit.
 
 What “remove” does:
   - Deletes the target directory: ~/Documents/BIO713/Practical
@@ -188,8 +188,8 @@ function check_pixi() {
         echo -e " ${GREEN}✔${NC} ${version}"
     else
         echo  -e " ${RED}𐄂${NC} pixi is not yet installed."
-        echo "First run ./Install.sh ..."
-        echo "...or restart your terminal if you already ran the ./Install.sh."
+        echo "First run ./Install ..."
+        echo "...or restart your terminal if you already ran the ./Install."
         exit 1
     fi
 }
@@ -197,12 +197,12 @@ function check_pixi() {
 function check_env() {
     echo
     echo -e "${CYAN}==>${NC} Checker: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
-    echo "This works on macOS and popular Linux distros."
+    echo "This script works on macOS and popular Linux distros."
     echo
     # Test of the directory
     if [ ! -d "$TARGET_DIR" ];then
         echo -e "\n${RED}Error${NC}: The pixi environment for the practical is not detected."
-        echo -e "Please run first ./Install.sh, then re-run ./Install.sh --check.\n"
+        echo -e "Please run first ./Install, then re-run ./Install --check.\n"
         exit 1
     else
         cd $TARGET_DIR

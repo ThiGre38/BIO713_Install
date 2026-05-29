@@ -270,7 +270,7 @@ function main() {
         MODE="remove"
     fi
 
-    CHECK=0
+    CHECK=false
     if [[ "${1:-}" == "--check" ]];then
         CHECK=true
     fi

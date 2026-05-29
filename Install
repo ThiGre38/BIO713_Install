@@ -32,7 +32,7 @@ echo -e " ${BLUE}#         ${GREEN}®2026 TG - UFR chimie biologie          ${BL
 echo -e " ${BLUE}###################################################${NC}"
 echo
 echo -e "${CYAN}==>${NC} Installer: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
-echo "This works on macOS and popular Linux distros."
+echo "This script works on macOS and popular Linux distros."
 echo
 }
 

@@ -11,7 +11,7 @@ set -euo pipefail
 
 # ---- parameters ----
 # # Colors for status messages
-VERSION=2.0b
+VERSION=2.0
 RED='\033[1;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'

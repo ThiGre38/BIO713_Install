@@ -28,7 +28,7 @@ Please use carefully.
 
 Running the script on Linux Ubuntu
 
-![ubuntu](imgs/ubuntu.png)
+![ubuntu](imgs/Ubuntu.png)
 
 ![pixi](imgs/check.png)
 

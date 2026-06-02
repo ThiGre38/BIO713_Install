@@ -14,7 +14,7 @@ Please use carefully.
 - Installation of the environment: To install the required modules, open your terminal (inside `Applications/Utilities` on MacOS) and type the following command. The script will create the folder hierarchy, install [pixi](https://pixi.prefix.dev/latest/advanced/pixi_shell/), [python](https://www.python.org/), [biopython](https://biopython.org/), [reportlab](https://docs.reportlab.com/) and [Jupyter Lab](https://jupyter.org/).
 
 ```
-./Install.sh
+./Install
 ```
 - Your machine is set up !
 
@@ -23,10 +23,16 @@ Please use carefully.
 - The activation and use of the environment will be explain during the class. In the meantime, you can check the validity of your installation by typing:
 
 ```
-./Install.sh --check
+./Install --check
 ```
 
+Running the script on Linux Ubuntu
+
+![ubuntu](imgs/ubuntu.png)
+
 ![pixi](imgs/check.png)
+
+## Check your environment directly from python
 
 A python script is also provided to check the correct environment in `Python` or in `Jupyter`:
 
@@ -60,7 +66,7 @@ The activation and the manipulation of the environment will be discussed during 
 - At the end of the course, you can remove the whole install by running again the bash script on MacOS and Linux:
 
 ```
-./Install.sh --remove
+./Install --remove
 ```
 
 ![pixi](imgs/remove.png)

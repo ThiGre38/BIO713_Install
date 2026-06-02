@@ -30,10 +30,17 @@ echo -e " ${BLUE}#              ${YELLOW}    MacOS and Linux                ${BL
 echo -e " ${BLUE}#                     ${YELLOW} (BIO713)                   ${BLUE}#${NC}"
 echo -e " ${BLUE}#         ${GREEN}®2026 TG - UFR chimie biologie          ${BLUE}#${NC}"
 echo -e " ${BLUE}###################################################${NC}"
+echo -e " ${BLUE}#${NC}                                                 ${BLUE}#${NC}"
+}
+function title_installer(){
+echo -e " ${CYAN}==>${NC} Installer: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
+echo " This script works on macOS and popular Linux distros."
 echo
-echo -e "${CYAN}==>${NC} Installer: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
-echo "This script works on macOS and popular Linux distros."
-echo
+}
+function title_check(){
+    echo -e " ${CYAN}==>${NC} Checker: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
+    echo " This script works on macOS and popular Linux distros."
+    echo
 }
 
 function usage() {
@@ -43,13 +50,15 @@ Usage:
   ./Install           Install (default)
   ./Install --check   Check for proper installation
   ./Install --remove  Totally remove the install and revert changes
-  ./Install --help    Display this message and quit.
+  ./Install --help    Display this message and quit
+  ./Install --version Display the version info.
 
 What “remove” does:
   - Deletes the target directory: ~/Documents/BIO713/Practical
   - If pixi was installed by this script, it will try to remove ~/.pixi (and restore nothing else)
 
 UGA - Grenoble, TG©2026
+
 EOF
 }
 
@@ -83,8 +92,8 @@ fi
 # ---- Install pixi (Rust-based, installs to user home) ----
 function install_pixi() {
     echo
-    echo -e "${CYAN}==>${NC} Installing JupyterLab & ReportLab  ${CYAN}<==${NC}"
-    echo "Using pixi environment to keep Python deps tidy."
+    echo -e " ${CYAN}==>${NC} Installing JupyterLab & ReportLab  ${CYAN}<==${NC}"
+    echo " Using pixi environment to keep Python deps tidy."
 
     if command -v pixi >/dev/null 2>&1; then
         echo -e "    ${GREEN}==>${NC} pixi: already installed."
@@ -106,9 +115,16 @@ function install_pixi() {
 }
 
 function cleanup() {
-    echo
-    echo -e "${YELLOW}==>${NC} Installer: ${RED}Remove mode${NC} ${YELLOW}<==${NC}"
-
+    echo -e " ${YELLOW}==>${NC} Installer: ${RED}Remove mode${NC} ${YELLOW}<==${NC}"
+    while true; do
+	    read -p "     Do you really want to remove all BIO713 install? (yes/no) " yn
+	        case $yn in
+	            [Yy]* ) echo -e "           ${RED}==>${NC} Ok, removing everything...";break;;
+	            [Nn]* ) echo -e "           ${RED}==>${NC} Ok, leaving setup untouched...\n"; exit 0;;
+                    * ) echo "             Please answer by typing [y]es or [n]o.";;
+                esac
+            done
+        echo -e "\n ${MAGENTA}==>${NC} ${RED} STARTING REMOVAL ${NC} ${MAGENTA}<==${NC}"
 
     if [ -d "$TARGET_DIR" ]; then
         echo -e "${YELLOW}==>${NC} Deleting project directory: $TARGET_DIR ${YELLOW}<==${NC}"
@@ -149,11 +165,11 @@ function install_python_pkgs() {
 
     # Ensure pixi can create/run envs
     if ! command -v pixi >/dev/null 2>&1; then
-        echo "${RED}==> Error${NC}: pixi is required but not available."
+        echo " ${RED}==> Error${NC}: pixi is required but not available."
         exit 1
     fi
 
-  echo "Creating/using pixi environment: $TARGET_DIR"
+  echo "   Creating/using pixi environment in: $TARGET_DIR"
   # Minimal pixi config: Python + packages via PyPI
   # We keep it compact: use pixi 'init' and then 'add' for python deps.
   if [ ! -f "$TARGET_DIR/pixi.toml" ]; then
@@ -173,16 +189,14 @@ function install_python_pkgs() {
   pixi add reportlab || true
   pixi install --no-progress || pixi install || true
 
-  echo -e "    ${GREEN}==>${NC} Done.\n To use, type:"
+  echo -e "    ${GREEN}==>${NC} Done."
+  echo -e "\n To activate pixi, relaunch the terminal\n To use pixi, type:"
   echo " pixi shell -e $TARGET_DIR"
-
-  echo -e "\n To activate pixi, relaunch the terminal"
-
 }
 
 function check_pixi() {
     echo
-    echo -e "${CYAN}==>${NC} Checking the installation of pixi and deps ${CYAN}<==${NC}"
+    echo -e " ${CYAN}==>${NC} Checking the installation of pixi and deps ${CYAN}<==${NC}"
     if command -v pixi >/dev/null 2>&1; then
         version=`pixi --version`
         echo -e " ${GREEN}✔${NC} ${version}"
@@ -195,21 +209,16 @@ function check_pixi() {
 }
 
 function check_env() {
-    echo
-    echo -e "${CYAN}==>${NC} Checker: Pixi shell, JupyterLab, ReportLab ${CYAN}<==${NC}"
-    echo "This script works on macOS and popular Linux distros."
-    echo
     # Test of the directory
     if [ ! -d "$TARGET_DIR" ];then
-        echo -e "\n${RED}Error${NC}: The pixi environment for the practical is not detected."
-        echo -e "If you know it is present on your computer, please place here:"
-        echo -e "${YELLOW} ==> $TARGET_DIR <==${NC}"
-        echo -e "Else, please run first ./Install, then re-run ./Install --check.\n"
+        echo -e "\n ${RED}Error${NC}: The pixi environment for the practical is not detected."
+        echo -e " If you know it is present on your computer, please place here:"
+        echo -e " ${YELLOW} ==> $TARGET_DIR <==${NC}"
+        echo -e " Else, please run first ./Install, then re-run ./Install --check.\n"
         exit 1
     else
         cd $TARGET_DIR
-        echo -e "${GREEN}==> Working in: $TARGET_DIR <==${NC}"
-        echo
+        echo -e "\n ${GREEN}==> Working in: $TARGET_DIR <==${NC}"
     fi
 }
 
@@ -248,11 +257,11 @@ function check_deps() {
     fi
     echo
     if [[ "$BADPYT" == "true" && "$BADJUP" == "true" && "$BADREP" == "true" && "$BADBPY" == "true" ]];then
-        echo -e "${CYAN}==>${NC} Installation complete! ${CYAN}<==${NC}"
+        echo -e " ${CYAN}==>${NC} Installation complete! ${CYAN}<==${NC}"
         echo; exit 0
     else
-        echo -e "${RED} ==>${NC} Installation incomplete! ${RED}<==${NC}"
-        echo -e "${RED} ==>${NC} Check the procedure or ask the prof. ${RED}<==${NC}"
+        echo -e " ${RED} ==>${NC} Installation incomplete! ${RED}<==${NC}"
+        echo -e " ${RED} ==>${NC} Check the procedure or ask the prof. ${RED}<==${NC}"
         echo; exit 1
     fi
 }
@@ -260,25 +269,34 @@ function check_deps() {
 # ---- Main function ----
 function main() {
 
-    if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+    if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+        title_sup
         usage
         exit 0
     fi
 
     MODE="install"
-    if [[ "${1:-}" == "--remove" ]]; then
+    if [[ "${1:-}" == "--remove" || "${1:-}" == "-r" ]]; then
         MODE="remove"
     fi
 
     CHECK=false
-    if [[ "${1:-}" == "--check" ]];then
+    if [[ "${1:-}" == "--check" || "${1:-}" == "-c" ]];then
         CHECK=true
     fi
 
+    if [[ "${1:-}" == "--version" || "${1:-}" == "-v" ]];then
+        title_sup
+        echo -e " ${BLUE}#${NC}            BIO713 Install Version: ${VERSION}         ${BLUE}#${NC}"
+        echo -e " ${BLUE}###################################################${NC}\n"
+        exit 0
+    fi
+
     title_sup
-    detect_os
 
     if [[ "$CHECK" == "true" ]];then
+        title_check
+        detect_os
         check_env
         check_pixi
         check_deps
@@ -294,15 +312,17 @@ function main() {
         echo "    export PATH=\"\$HOME/.pixi/bin:\$PATH\""
         echo
     else
+        detect_os
         install_pixi
         install_python_pkgs
         echo
-        echo -e "${CYAN}==>${NC} Installation complete! ${CYAN}<==${NC}"
+        echo -e " ${CYAN}==>${NC} Installation complete! ${CYAN}<==${NC}"
         echo
-        echo -e "${GREEN}==>${NC} Restart your terminal to use python and jupyter lab."
-        echo " You can also check your installation by typing ./Install --check"
+        echo -e " ${GREEN}==>${NC} Your terminal needs to be restarted."
+        echo " You can check your installation by typing ./Install --check"
         echo
-        echo -e "${YELLOW}==> Note${NC}:"
+        echo -e " ${GREEN}==>${NC} To start, type/copy: ${YELLOW}pixi run jupyter lab &${NC}\n"
+        echo -e " ${YELLOW}==> Note${NC}:"
         echo " If your shell doesn't automatically pick up pixi on the next login,"
         echo " add this to your ~/.bashrc or ~/.zshrc:"
         echo "    export PATH=\"\$HOME/.pixi/bin:\$PATH\""

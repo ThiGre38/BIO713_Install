@@ -25,12 +25,11 @@ Please use carefully.
 ```
 ./Install --check
 ```
+![pixi](imgs/check.png)
 
-Running the script on Linux Ubuntu
+- Running the script on Linux Ubuntu should setup your machine automatically
 
 ![ubuntu](imgs/Ubuntu.png)
-
-![pixi](imgs/check.png)
 
 ## Check your environment directly from python
 

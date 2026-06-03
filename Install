@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #: Title       : Install
 #: Date        : 2026-04-08
-#: Updated     : 2026-04-16
+#: Updated     : 2026-06-03
 #: Author      : Thierry Gautier <thierry.gautier@univ-grenoble-alpes.fr>
 #: Version     : 2.0
 #: Description : Automatic install of python for the BIO713 Practical.

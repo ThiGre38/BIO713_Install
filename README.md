@@ -11,12 +11,14 @@ Please use carefully.
 
 ## 2. Usage
 
-- Installation of the environment: To install the required modules, open your terminal (inside `Applications/Utilities` on MacOS) and type the following command.
+- Installation of the environment: To install the required modules, open your terminal (inside `Applications/Utilities` on MacOS) and type the following commands.
 - The script will:
     - create the folder hierarchy
     - install [pixi](https://pixi.prefix.dev/latest/advanced/pixi_shell/), [python](https://www.python.org/), [biopython](https://biopython.org/), [reportlab](https://docs.reportlab.com/) and [Jupyter Lab](https://jupyter.org/).
 
 ```
+git clone https://github.com/ThiGre38/BIO713_Install.git
+cd BIO713_Install
 ./Install
 ```
 - Your machine is set up !

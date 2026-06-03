@@ -1,6 +1,6 @@
 # BIO713 Setup
 
-## Goal
+## 1. Goal
 These scripts install and check the required environment for the course [BIO713](https://formations.univ-grenoble-alpes.fr/fr/catalogue-2021/master-XB/master-biologie-IAQKB0GE/parcours-molecular-and-cellular-biology-1re-annee-IK43J2QV/ue-from-cells-to-viruses-molecular-genetics-and-epigenetics-controls-JGROOI24.html) "From Cells to Viruses: Molecular Genetics and Epigenetics Controls".
 
 The course is proposed as part of the Master [Molecular and Cellular Biology](https://formations.univ-grenoble-alpes.fr/fr/catalogue-2021/master-XB/master-biologie-IAQKB0GE/parcours-molecular-and-cellular-biology-1re-annee-IK43J2QV.html) program.
@@ -9,11 +9,11 @@ These scripts are still in development and can behave abnormally.\
 **They are provided "as is"**, without warranty as indicated in the [licence](LICENSE.md).\
 Please use carefully.
 
-## Usage
+## 2. Usage
 
 - Installation of the environment: To install the required modules, open your terminal (inside `Applications/Utilities` on MacOS) and type the following command.
-- The script will create:
-    - the folder hierarchy
+- The script will:
+    - create the folder hierarchy
     - install [pixi](https://pixi.prefix.dev/latest/advanced/pixi_shell/), [python](https://www.python.org/), [biopython](https://biopython.org/), [reportlab](https://docs.reportlab.com/) and [Jupyter Lab](https://jupyter.org/).
 
 ```
@@ -35,10 +35,20 @@ Please use carefully.
 
 ![ubuntu](imgs/Ubuntu.png)
 
-## Checking your environment directly from python
+## 3. Other options available
 
-- A python script is also provided to check the correct environment in `Python` or in `Jupyter.
-- This suppose that you already have a working python setup or that you successfully (re)install python.
+- To know what other options are available, run:
+
+```
+./Install --help
+```
+
+![help](imgs/help.png)
+
+## 4. Checking your environment directly from python
+
+- A python script is also provided to check the correct environment in `Python` or in `Jupyter lab`.
+- This suppose that you already have a working python setup or that you successfully (re)installed python.
 
 ```
 python Check.py
@@ -53,7 +63,7 @@ python Check.py
 
 - Alernatively, you can copy-paste the code into a Jupyter cell and run the cell.
 
-## Prerequisites
+## 5. Prerequisites
 
 - The scripts should work on any computer running a modern OS (MacOS from Sequoia+, or Debian/Ubuntu Linux).
 - Unix users (MacOS and Linux) will need the terminal.app located in `Applications/Utilities` on MacOS systems (Adapt names if your OS is not running in US English language).
@@ -65,7 +75,7 @@ python Check.py
 
 - The activation and the manipulation of the environment will be discussed during the class.
 
-## Desinstallation
+## 6. Desinstallation
 
 - At the end of the course, you can remove the whole install by running again the bash script on MacOS and Linux:
 
@@ -83,13 +93,14 @@ python Check.py
 
 - The script will attempt to remove as much as possible:
 
-    - The complete folder hierarchy containing all the downloaded data (`~/Documents/BIO713` and enclosed directories).
-    - The module containing folder located in `~/Documents/BIO713/TP`.
-    - The `pixi` program should be removed only when it was installed by the `Install` script.
-    - When `pixi` has been removed either programatically or manually, check that the path has also been cleaned by removing or commenting the line in your shell config file. Typically `~/.bashrc`, `~/.zshrc` or eventually `~/.config/fish/config.fish`.
-    - The line to look for is `export PATH="$HOME/.pixi/bin:$PATH"` for bash and zsh or `fish_add_path $HOME/.pixi/bin` for fish shell.
+    1. The complete folder hierarchy containing all the downloaded data (`~/Documents/BIO713` and enclosed directories).
+    2. The module containing folder located in `~/Documents/BIO713/TP`.
+    3. The `pixi` program should be removed only when it was installed by the `Install` script.
+    4. When `pixi` has been removed either programatically or manually, check that the path has also been cleaned by removing or commenting the line in your shell config file. Typically `~/.bashrc`, `~/.zshrc` or eventually `~/.config/fish/config.fish`.
+        - The line to look for is `export PATH="$HOME/.pixi/bin:$PATH"` for bash and zsh or `fish_add_path $HOME/.pixi/bin` for fish shell.
+- These 4 steps can also be performed by hand if the automatic procedure fails or if you prefer to realize the desinstallation manually.
 
-## Copyright
+## 7. Copyright
 
 Thierry Gautier\
 Université Grenoble Alpes\

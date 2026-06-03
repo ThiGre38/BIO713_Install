@@ -20,7 +20,7 @@ import os
 import sys
 
 # List of required modules (add/remove as needed)
-REQUIRED_MODULES = ["Bio", "reportlab"]  # Example list
+REQUIRED_MODULES = ["Bio", "reportlab", "jupyterlab"]  # Example list
 
 
 def title_sup():
@@ -34,7 +34,7 @@ def title_sup():
     print("#" + 10 * " " + "TG©2026")
     print(line)
     print("# Checks the presence of required module:")
-    print("# - Biopython\n# - ReportLab")
+    print("# - Biopython\n# - ReportLab\n# - Jupyter lab")
     print(line)
 
 
@@ -77,12 +77,12 @@ def main():
         is_ok, info = check_module(module)
 
         if is_ok:
-            if module == "BIO":
-                print(f"# ✅ [FOUND] biopython version {info}")
+            if module == "Bio":
+                print(f"# ✅ [FOUND] biopython       version {info}")
             else:
                 print(f"# ✅ [FOUND] {module:15} version {info}")
         else:
-            if module == "BIO":
+            if module == "Bio":
                 print("# ❌ [MISSING] biopython")
                 print("#       🔧 Install command: pixi add biopython\n")
 

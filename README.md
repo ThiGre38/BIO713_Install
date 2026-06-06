@@ -37,6 +37,8 @@ cd BIO713_Install
 
 ![ubuntu](imgs/Ubuntu.png)
 
+![Linux](imgs/checklin.png)
+
 ## 3. Other options available
 
 - To know what other options are available, run:

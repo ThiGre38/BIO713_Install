@@ -65,7 +65,7 @@ python Check.py
 
 ![help](imgs/found.png)
 
-- Alernatively, you can copy-paste the code into a Jupyter cell and run the cell.
+- Alternatively, you can copy-paste the code into a Jupyter cell and run the cell.
 
 ## 5. Prerequisites
 
@@ -74,7 +74,7 @@ python Check.py
 
 - Another script for the `PowerShell` application on Windows machines is provided "as is". It has not been extensively tested, **so use with caution**:
 
-- Open `PowerShell` on your Windows machine and run the script or double-click the script `Windows_Install.ps1`
+- Open `PowerShell` on your Windows machine and run the script or double-click the script `Win_install.ps1`
 - In case of an installation failure, proceed with the manual install instead (see the course Moodle page) or wait for the first practical session to sort out the installation issue(s).
 
 - The activation and the manipulation of the environment will be discussed during the class.

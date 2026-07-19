@@ -33,7 +33,7 @@ cd BIO713_Install
 ```
 ![pixi](imgs/check.png)
 
-- Running the script on Linux Ubuntu should setup your machine automatically
+- Running the script on Linux Ubuntu should setup your machine automatically. `curl` and other unix utilities might need installation too.
 
 ![ubuntu](imgs/Ubuntu.png)
 
@@ -89,7 +89,7 @@ python Check.py
 
 ![pixi](imgs/remove.png)
 
-- Windows users can revert by typing in the PowerShell:
+- Windows users can revert the setup by typing in the PowerShell:
 
 ```
 .\Win_install.ps1 -Remove
